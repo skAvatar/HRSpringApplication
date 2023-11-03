@@ -1,0 +1,10 @@
+1 - Hello Geeks. My name is Nishkarsh Gandhi. hola mundo
+2 - GeeksforGeeks is a Computer Science portal for geeks.
+3 - hola mundo 
+//Dont count
+// /*
+jika mundo 
+*/
+/* no debe contar
+hola
+*/
