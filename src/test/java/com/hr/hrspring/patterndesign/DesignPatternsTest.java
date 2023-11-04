@@ -1,10 +1,12 @@
 package com.hr.hrspring.patterndesign;
 
+import com.hr.hrspring.enums.Cities;
+import com.hr.hrspring.patterDesign.Creational.abstractfactory.ClientAbstractFactory;
 import com.hr.hrspring.patterDesign.Creational.abstractfactory.factory.DatabaseConcreteFactory;
 import com.hr.hrspring.patterDesign.Creational.abstractfactory.factory.NetworkConcreteFactory;
-import com.hr.hrspring.patterDesign.Creational.abstractfactory.interfaces.DSAbstractFactory;
-import com.hr.hrspring.patterDesign.Creational.abstractfactory.interfaces.Response;
-import com.hr.hrspring.patterDesign.Creational.abstractfactory.interfaces.Service;
+import com.hr.hrspring.patterDesign.Creational.builder.Apartment;
+import com.hr.hrspring.patterDesign.Creational.builder.ApartmentBuilder;
+import com.hr.hrspring.patterDesign.Creational.builder.Director;
 import com.hr.hrspring.patterDesign.Creational.factorymethod.PaymentFactory;
 import com.hr.hrspring.patterDesign.Creational.factorymethod.PaymentMethod;
 import com.hr.hrspring.patterDesign.Creational.factorymethod.Payment;
@@ -15,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-public class DesignPatterns {
+public class DesignPatternsTest {
 
     @Test
     void factoryMethodTest(){
@@ -34,40 +36,47 @@ public class DesignPatterns {
     }
 
     @Test
-    void abstractFactory(){
-
+    void abstractFactoryTest(){
 
         ClientAbstractFactory client = new ClientAbstractFactory(new DatabaseConcreteFactory());
-
         client.communicate();
-
         ClientAbstractFactory client2 = new ClientAbstractFactory(new NetworkConcreteFactory());
-
         client2.communicate();
 
+    }
+
+    @Test
+    void builderTest() {
+        ApartmentBuilder builder = new ApartmentBuilder();
+
+        Apartment aptr1 = builder.sqm(120)
+                .rooms(4)
+                .city("City Apt1")
+                .area("Area Apt1")
+                .kitchen(true).build();
+        System.out.println(aptr1.display());
+        Assertions.assertTrue(aptr1.isKitchen());
+
+        Apartment aptr2 = builder.sqm(200)
+                .city("London").build();
+
+        System.out.println(aptr2.display());
+        Assertions.assertNotNull(aptr2.getCity());
 
     }
 
-// Client for Abstract Factory
-    private static class ClientAbstractFactory{
-        Service service;
-        Response response;
+    @Test
+    void builderDirectorTest() {
+        ApartmentBuilder builder = new ApartmentBuilder();
+        Director director = new Director(builder);
+        Apartment basic = director.createBasic().build();
+        Apartment medium = director.createMedium().build();
+        Apartment high = director.createHigh().build();
 
-        public ClientAbstractFactory (DSAbstractFactory factory){
-            service = factory.createService();
-            response = factory.createResponse();
-        }
-
-        public void communicate(){
-            if(service != null && response != null){
-                System.out.println(service.getServiceRun());
-                System.out.println(response.getResponse());
-            }
-        }
+        Assertions.assertTrue(basic.isKitchen());
+        Assertions.assertEquals(Cities.TUCUPITA.city,medium.getCity());
+        Assertions.assertEquals(Cities.PTO_ORDAZ.city,high.getCity());
 
     }
-
-
-
 
 }
