@@ -12,6 +12,9 @@ import com.hr.hrspring.patterDesign.Creational.factorymethod.PaymentMethod;
 import com.hr.hrspring.patterDesign.Creational.factorymethod.Payment;
 import com.hr.hrspring.patterDesign.Creational.factorymethod.objects.CreditCardPayment;
 import com.hr.hrspring.patterDesign.Creational.factorymethod.objects.PaypalPayment;
+import com.hr.hrspring.patterDesign.Creational.prototype.Bicycle;
+import com.hr.hrspring.patterDesign.Creational.prototype.Car;
+import com.hr.hrspring.patterDesign.Creational.prototype.Vehicle;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +23,7 @@ import java.math.BigDecimal;
 public class DesignPatternsTest {
 
     @Test
-    void factoryMethodTest(){
+    void factoryMethodTest() {
         try {
             Payment payment = PaymentFactory.create(PaymentMethod.CREDIT_CARD);
             payment.pay(new BigDecimal("1000000.0"));
@@ -36,7 +39,7 @@ public class DesignPatternsTest {
     }
 
     @Test
-    void abstractFactoryTest(){
+    void abstractFactoryTest() {
 
         ClientAbstractFactory client = new ClientAbstractFactory(new DatabaseConcreteFactory());
         client.communicate();
@@ -74,9 +77,29 @@ public class DesignPatternsTest {
         Apartment high = director.createHigh().build();
 
         Assertions.assertTrue(basic.isKitchen());
-        Assertions.assertEquals(Cities.TUCUPITA.city,medium.getCity());
-        Assertions.assertEquals(Cities.PTO_ORDAZ.city,high.getCity());
+        Assertions.assertEquals(Cities.TUCUPITA.city, medium.getCity());
+        Assertions.assertEquals(Cities.PTO_ORDAZ.city, high.getCity());
 
     }
+
+    @Test
+    void prototypeTest() {
+
+        Vehicle v1 = new Car(4, 350000L, "Blood Red");
+        Vehicle v2 = v1.clone();
+
+        Assertions.assertEquals(v2.getWheels(), v1.getWheels());
+        Assertions.assertEquals(v2.getPrice(), v1.getPrice());
+        Assertions.assertEquals(((Car) v2).getColor(), ((Car) v1).getColor());
+
+        Vehicle bicycle1 = new Bicycle(2, 25000, true);
+        Vehicle bicycle2 = bicycle1.clone();
+
+        Assertions.assertEquals(bicycle2.getWheels(), bicycle1.getWheels());
+        Assertions.assertEquals(bicycle2.getPrice(), bicycle1.getPrice());
+        Assertions.assertEquals(((Bicycle) bicycle2).isCityBike(), ((Bicycle)bicycle1).isCityBike());
+
+    }
+
 
 }
