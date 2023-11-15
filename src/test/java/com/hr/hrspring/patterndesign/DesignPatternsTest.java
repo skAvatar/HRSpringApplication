@@ -28,6 +28,12 @@ import com.hr.hrspring.patterDesign.Structural.bridge.inherence.impl.HawaianaPiz
 import com.hr.hrspring.patterDesign.Structural.bridge.inherence.impl.PepperonPizza;
 import com.hr.hrspring.patterDesign.Structural.bridge.inherence.bridge.AmericanRestaurant;
 import com.hr.hrspring.patterDesign.Structural.bridge.inherence.bridge.ItalianRestaurant;
+import com.hr.hrspring.patterDesign.Structural.composite.baeldung.base.Department;
+import com.hr.hrspring.patterDesign.Structural.composite.baeldung.composite.HeadDepartment;
+import com.hr.hrspring.patterDesign.Structural.composite.baeldung.leafs.FinancialDepartment;
+import com.hr.hrspring.patterDesign.Structural.composite.baeldung.leafs.SalesDepartment;
+import com.hr.hrspring.patterDesign.Structural.composite.basic.Composite;
+import com.hr.hrspring.patterDesign.Structural.composite.basic.Equipment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -191,5 +197,36 @@ public class DesignPatternsTest {
         ItalianRestaurant italianRestaurant = new ItalianRestaurant(new HawaianaPizza());
         italianRestaurant.deliver();
 
+    }
+
+    @Test
+    void compositeBasicTest(){
+
+        Composite computer = new Composite("PC");
+        Equipment processor = new Equipment("Processor", 1000);
+        Equipment hdd = new Equipment("Hard Drive", 250);
+
+        Composite memory = new Composite("Memory");
+        Equipment ram = new Equipment("Random Access Memory", 75);
+        Equipment rom = new Equipment("Read Only Memory", 100);
+
+        memory.add(rom).add(ram);
+        computer.add(processor).add(hdd).add(memory);
+
+        System.out.println("Computer price " + computer.getPrice());
+        System.out.println("Memory price " + memory.getPrice());
+    }
+
+    @Test
+    void compositeBaeldungTest() {
+        Department salesDepartment = new SalesDepartment(1, "Sales Department");
+        Department finalcialDepartment = new FinancialDepartment(1, "Financial Department");
+
+        HeadDepartment headDepartment = new HeadDepartment(3, "Head Department");
+
+        headDepartment.addDepartment(salesDepartment);
+        headDepartment.addDepartment(finalcialDepartment);
+
+        headDepartment.printDepartmentName();
     }
 }
