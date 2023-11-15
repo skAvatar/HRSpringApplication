@@ -15,10 +15,30 @@ import com.hr.hrspring.patterDesign.Creational.factorymethod.objects.PaypalPayme
 import com.hr.hrspring.patterDesign.Creational.prototype.Bicycle;
 import com.hr.hrspring.patterDesign.Creational.prototype.Car;
 import com.hr.hrspring.patterDesign.Creational.prototype.Vehicle;
+import com.hr.hrspring.patterDesign.Creational.singleton.SingletonBasic;
+import com.hr.hrspring.patterDesign.Creational.singleton.SingletonThreadSafe;
+import com.hr.hrspring.patterDesign.Structural.adapter.Adapter;
+import com.hr.hrspring.patterDesign.Structural.adapter.DataBaseData;
+import com.hr.hrspring.patterDesign.Structural.adapter.DisplayData;
+import com.hr.hrspring.patterDesign.Structural.bridge.composite.impl.Android;
+import com.hr.hrspring.patterDesign.Structural.bridge.composite.bridge.Facebook;
+import com.hr.hrspring.patterDesign.Structural.bridge.composite.impl.IOS;
+import com.hr.hrspring.patterDesign.Structural.bridge.composite.bridge.Instagram;
+import com.hr.hrspring.patterDesign.Structural.bridge.inherence.impl.HawaianaPizza;
+import com.hr.hrspring.patterDesign.Structural.bridge.inherence.impl.PepperonPizza;
+import com.hr.hrspring.patterDesign.Structural.bridge.inherence.bridge.AmericanRestaurant;
+import com.hr.hrspring.patterDesign.Structural.bridge.inherence.bridge.ItalianRestaurant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class DesignPatternsTest {
 
@@ -101,5 +121,75 @@ public class DesignPatternsTest {
 
     }
 
+    @Test
+    void singletonTest() {
 
+        SingletonBasic.getInstance().setData(new Car(4, 350000L, "Red"));
+        Car testSingleton = (Car)SingletonBasic.getInstance().getData();
+        Assertions.assertEquals("Red",testSingleton.getColor() );
+
+        SingletonBasic.getInstance().setData(new Car(5, 35000L, "Blue"));
+
+        Car testSingleton2 = (Car)SingletonBasic.getInstance().getData();
+        Assertions.assertEquals("Blue",testSingleton2.getColor() );
+
+    }
+
+    @Test
+    void SingletonThreadSafeTest() throws InterruptedException {
+        int threadsAmount = 100;
+        Set<SingletonThreadSafe> singletonSet = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+        ExecutorService executorService = Executors.newFixedThreadPool(threadsAmount);
+
+        for (int i = 0; i < threadsAmount; i++) {
+            executorService.execute(() -> {
+                SingletonThreadSafe singleton = SingletonThreadSafe.getInstance();
+                singleton.setData(new Bicycle(2, 24000L, false));
+                singletonSet.add(singleton);
+            });
+        }
+
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.MINUTES);
+
+        Assertions.assertTrue(singletonSet.size() == 1);
+    }
+
+    @Test
+    void adapterTest(){
+        Adapter newAdapter = new Adapter();
+        List<DataBaseData> dataBaseData = List.of(new DataBaseData(10, 10L),
+                new DataBaseData(11, 11L),
+                new DataBaseData(12, 12L),
+                new DataBaseData(13, 13L),
+                new DataBaseData(14, 14L));
+        List<DisplayData>  displayData = newAdapter.convertData(dataBaseData);
+
+        Assertions.assertEquals(4, displayData.size() - 1);
+        Assertions.assertEquals(String.class, displayData.get(4).data.getClass());
+        Assertions.assertEquals(Long.class, displayData.get(4).number.getClass());
+
+    }
+
+    @Test
+    void bridgeCompositeTest(){
+
+        Facebook facebook = new Facebook(new Android());
+        Instagram instagram = new Instagram(new IOS());
+        facebook.runApplication();
+        instagram.runApplication();
+
+    }
+
+    @Test
+    void bridgeInheritanceTest() {
+
+        AmericanRestaurant americanRestaurant = new AmericanRestaurant(new PepperonPizza());
+        americanRestaurant.deliver();
+        System.out.println();
+        ItalianRestaurant italianRestaurant = new ItalianRestaurant(new HawaianaPizza());
+        italianRestaurant.deliver();
+
+    }
 }

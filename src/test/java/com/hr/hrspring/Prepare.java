@@ -459,6 +459,16 @@ DELETE FROM [SampleDB].[dbo].[Employee]
 
     }
 
+    @Test
+    void awsDemo1(){
+
+    }
+
+    @Test
+    void awsDemo2(){
+
+    }
+
 
 
 
