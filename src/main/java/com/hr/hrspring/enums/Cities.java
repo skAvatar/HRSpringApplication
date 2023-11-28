@@ -9,7 +9,7 @@ public enum Cities {
 
     public final String city;
 
-    private  Cities (String city){
+    Cities (String city){
         this.city = city;
     }
 
