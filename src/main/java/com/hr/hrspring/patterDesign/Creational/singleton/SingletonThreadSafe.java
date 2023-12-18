@@ -1,6 +1,10 @@
 package com.hr.hrspring.patterDesign.Creational.singleton;
 
+import lombok.Getter;
+
+@Getter
 public class SingletonThreadSafe<T> {
+
     private static volatile SingletonThreadSafe singletonThreadSafe;
 
     private T data;
@@ -13,10 +17,6 @@ public class SingletonThreadSafe<T> {
             singletonThreadSafe = new SingletonThreadSafe();
         }
         return singletonThreadSafe;
-    }
-
-    public T getData() {
-        return data;
     }
 
     public void setData( T data) {

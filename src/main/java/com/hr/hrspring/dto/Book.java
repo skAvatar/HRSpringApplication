@@ -1,4 +1,4 @@
-package com.hr.hrspring.poo.dto;
+package com.hr.hrspring.dto;
 
  abstract class Book {
     String title;
