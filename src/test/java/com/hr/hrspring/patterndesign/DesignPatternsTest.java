@@ -43,6 +43,8 @@ import com.hr.hrspring.patterDesign.Structural.decorator.basic.component.Notifie
 import com.hr.hrspring.patterDesign.Structural.decorator.basic.concrete.FacebookDecorator;
 import com.hr.hrspring.patterDesign.Structural.decorator.basic.concrete.WhatsAppDecorator;
 import com.hr.hrspring.patterDesign.Structural.decorator.basic.interf.INotifier;
+import com.hr.hrspring.patterDesign.Structural.facade.baeldung.CarEngineFacade;
+import com.hr.hrspring.patterDesign.Structural.facade.basic.BuyCryptoFacade;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -255,10 +257,29 @@ public class DesignPatternsTest {
         ChristmasTree treeOne = new Garland(new ChristmasTreeImpl());
         Assertions.assertEquals(treeOne.decorate(), "Christmas tree with Garland");
 
-
         ChristmasTree treeTwo = new BubbleLights(
                 new Garland(new Garland(new ChristmasTreeImpl())));
         Assertions.assertEquals(treeTwo.decorate(),
                 "Christmas tree with Garland with Garland with Bubble Lights");
     }
+
+    @Test
+    void facadeBasicTest() {
+        BuyCryptoFacade facade = new BuyCryptoFacade();
+        facade.buyCryptoCurrency(100, "BTC");
+    }
+
+    @Test
+    void facadeBaeldungTest() {
+        CarEngineFacade facade = new CarEngineFacade();
+        System.out.println("Car start >> ");
+        facade.startEngine();
+        System.out.println("Car stop >> ");
+        facade.stopEngine();
+    }
+
+
+
+
+
 }
