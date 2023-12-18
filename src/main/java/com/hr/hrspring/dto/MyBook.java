@@ -1,4 +1,4 @@
-package com.hr.hrspring.poo.dto;
+package com.hr.hrspring.dto;
 
 public class MyBook extends Book{
     int price;

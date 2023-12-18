@@ -1,8 +1,8 @@
 package com.hr.hrspring.poo;
 
-import com.hr.hrspring.poo.dto.MyBook;
-import com.hr.hrspring.poo.dto.Person;
-import com.hr.hrspring.poo.dto.Student;
+import com.hr.hrspring.dto.MyBook;
+import com.hr.hrspring.dto.AbstractPerson;
+import com.hr.hrspring.dto.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class POOTest {
 
         Student student = new Student("Heraldo", "Memelli", 8135627, testCores);
         Student.methodTest();
-        Person.methodTest();
+        AbstractPerson.methodTest();
         Assertions.assertEquals('O', student.calculate());
 
     }

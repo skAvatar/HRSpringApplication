@@ -35,6 +35,14 @@ import com.hr.hrspring.patterDesign.Structural.composite.baeldung.leafs.Financia
 import com.hr.hrspring.patterDesign.Structural.composite.baeldung.leafs.SalesDepartment;
 import com.hr.hrspring.patterDesign.Structural.composite.basic.Composite;
 import com.hr.hrspring.patterDesign.Structural.composite.basic.Equipment;
+import com.hr.hrspring.patterDesign.Structural.decorator.baeldung.ChristmasTreeImpl;
+import com.hr.hrspring.patterDesign.Structural.decorator.baeldung.concrete.BubbleLights;
+import com.hr.hrspring.patterDesign.Structural.decorator.baeldung.concrete.Garland;
+import com.hr.hrspring.patterDesign.Structural.decorator.baeldung.interf.ChristmasTree;
+import com.hr.hrspring.patterDesign.Structural.decorator.basic.component.Notifier;
+import com.hr.hrspring.patterDesign.Structural.decorator.basic.concrete.FacebookDecorator;
+import com.hr.hrspring.patterDesign.Structural.decorator.basic.concrete.WhatsAppDecorator;
+import com.hr.hrspring.patterDesign.Structural.decorator.basic.interf.INotifier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -220,6 +228,7 @@ public class DesignPatternsTest {
 
     @Test
     void compositeBaeldungTest() {
+
         Department salesDepartment = new SalesDepartment(1, "Sales Department");
         Department finalcialDepartment = new FinancialDepartment(1, "Financial Department");
 
@@ -230,6 +239,26 @@ public class DesignPatternsTest {
 
         headDepartment.printDepartmentName();
 
+    }
 
+    @Test
+    void decoratorBasicTest() {
+        INotifier notifier = new FacebookDecorator(
+                new WhatsAppDecorator(new Notifier("create Notifiers of ")));
+
+        notifier.send(" << This Message >> ");
+
+    }
+
+    @Test
+    void decoratorBaeldungTest() {
+        ChristmasTree treeOne = new Garland(new ChristmasTreeImpl());
+        Assertions.assertEquals(treeOne.decorate(), "Christmas tree with Garland");
+
+
+        ChristmasTree treeTwo = new BubbleLights(
+                new Garland(new Garland(new ChristmasTreeImpl())));
+        Assertions.assertEquals(treeTwo.decorate(),
+                "Christmas tree with Garland with Garland with Bubble Lights");
     }
 }

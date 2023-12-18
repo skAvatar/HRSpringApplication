@@ -1,17 +1,15 @@
-package com.hr.hrspring.poo.dto;
+package com.hr.hrspring.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public abstract class Person {
+@Data
+public abstract class AbstractPerson {
     protected String firstName;
     protected String lastName;
     protected int idNumber;
 
     // Constructor
-    public Person(String firstName, String lastName, int identification){
+    public AbstractPerson(String firstName, String lastName, int identification){
         this.firstName = firstName;
         this.lastName = lastName;
         this.idNumber = identification;

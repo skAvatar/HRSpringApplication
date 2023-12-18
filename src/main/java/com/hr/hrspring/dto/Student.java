@@ -1,7 +1,7 @@
-package com.hr.hrspring.poo.dto;
+package com.hr.hrspring.dto;
 
 
-public class Student extends Person {
+public class Student extends AbstractPerson {
     
     private int[] testScores;
     public Student(String firstName, String lastName, int identification, int[] testScores){
