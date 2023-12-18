@@ -1,7 +1,7 @@
 package com.hr.hrspring.patterDesign.Structural.decorator.basic.component;
 
-import com.hr.hrspring.patterDesign.Structural.decorator.basic.DatabaseService;
 import com.hr.hrspring.patterDesign.Structural.decorator.basic.interf.INotifier;
+import com.hr.hrspring.services.DatabaseService;
 import lombok.Data;
 
 @Data
