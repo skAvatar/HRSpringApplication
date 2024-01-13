@@ -1,15 +1,14 @@
 package com.hr.hrspring.lambdas;
 
-import com.hr.hrspring.dto.Person;
+import com.hr.hrspring.dto.GenericPerson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.hr.hrspring.dto.ConstantData.people;
+import static com.hr.hrspring.dto.MockData.people;
 import static com.hr.hrspring.enums.Gender.FEMALE;
 
 @SpringBootTest
@@ -18,8 +17,8 @@ public class AmigosCodeLambdaTest {
     @Test
     void filterFemale() {
         // Imperative
-        List<Person> females = new ArrayList<>();
-        for(Person peopleActual: people){
+        List<GenericPerson> females = new ArrayList<>();
+        for(GenericPerson peopleActual: people){
             if(FEMALE.equals(peopleActual.getGender())){
                 females.add(peopleActual);
             }
@@ -28,7 +27,7 @@ public class AmigosCodeLambdaTest {
 
         // Declarative
         people.stream()
-                .filter(person -> FEMALE.equals(person.getGender()))
+                .filter(genericPerson -> FEMALE.equals(genericPerson.getGender()))
                 .toList()
                 .forEach(System.out::println);
 
