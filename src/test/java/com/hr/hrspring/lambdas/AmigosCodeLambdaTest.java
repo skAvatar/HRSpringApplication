@@ -222,7 +222,7 @@ public class AmigosCodeLambdaTest {
     }
 
     @Test
-    public void lecture11() {
+    public void lecture11Reduce() {
 
         /*
         <U> U reduce(U identity,
@@ -245,7 +245,7 @@ public class AmigosCodeLambdaTest {
     }
 
     @Test
-    public void lecture12() {
+    public void lecture12ToList() {
         List<String> emails = people().stream()
                 .map(Person::getEmail)
                 .collect(ArrayList::new,
@@ -255,7 +255,7 @@ public class AmigosCodeLambdaTest {
     }
 
     @Test
-    public void lecture13() {
+    public void lecture13IntermediateTerminal() {
 
         // Pipeline -> Are sequencing
         System.out.println(
